@@ -5,6 +5,7 @@ import ContentPageLayout from '../layouts/ContentPageLayout.astro';
 import headerHtml from '../data/homepage/header.html?raw';
 import footerHtml from '../data/homepage/footer.html?raw';
 import contentManifest from '../data/content-pages/manifest.json';
+import { dedupeFeaturedContentImage } from '../lib/dedupeFeaturedImage';
 
 const contentHtmlModules = import.meta.glob('../data/content-pages/**/*.html', {
   query: '?raw',
@@ -52,6 +53,11 @@ const contentEntry =
   props.type === 'content'
     ? (contentManifest[props.slug as keyof typeof contentManifest] as ManifestEntry)
     : null;
+
+const contentHtml =
+  props.type === 'content' && props.slug in contentHtmlMap
+    ? dedupeFeaturedContentImage(contentHtmlMap[props.slug])
+    : '';
 ---
 
 {
@@ -67,7 +73,7 @@ const contentEntry =
       postCss={contentEntry.postCss}
     >
       <Fragment set:html={headerHtml} />
-      <Fragment set:html={contentHtmlMap[props.slug]} />
+      <Fragment set:html={contentHtml} />
       <Fragment set:html={footerHtml} />
     </ContentPageLayout>
   ) : (
