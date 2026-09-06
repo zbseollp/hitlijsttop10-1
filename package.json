@@ -14,7 +14,8 @@
     "fetch-homepage-css": "node scripts/fetch-homepage-css.mjs",
     "fetch-content-pages": "node scripts/fetch-content-pages.mjs",
     "fetch-content-pages-css": "node scripts/fetch-content-pages-css.mjs",
-    "fetch-blog-pages": "node scripts/fetch-blog-pages.mjs"
+    "fetch-blog-pages": "node scripts/fetch-blog-pages.mjs",
+    "deploy": "npm run build && node scripts/guard-deploy.mjs && npx wrangler deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
